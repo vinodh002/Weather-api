@@ -105,3 +105,18 @@ main {
   font-weight: 700;
   text-shadow: 3px 3px rgba(50, 50, 70, 0.5);
 }
+
+.a-link {
+  position: absolute;
+  top: 90%;
+  left: 50%;
+  transform: translateX(-50%);
+ 
+}
+
+
+.a-link a{
+  color: cadetblue;
+  text-decoration: none
+  ;
+}
