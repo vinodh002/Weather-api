@@ -20,7 +20,6 @@ function App() {
   const [error, setError] = useState("");
 
   const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
-  
 
   const getBackgroundImage = (weatherCode: string) => {
     if (!weatherCode)
@@ -40,7 +39,7 @@ function App() {
     return "https://images.unsplash.com/photo-1601297183305-6df142704ea2?auto=format&fit=crop&w=2000&q=80"; // sunny
   };
 
-  const fetchWeather = async (e: { preventDefault: () => void; }) => {
+  const fetchWeather = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     if (!city.trim()) {
       setError("Please enter a city name");
@@ -90,13 +89,16 @@ function App() {
       ]);
 
       setWeather(weatherData);
-      const dailyForecasts = forecastData.list.reduce((acc: { [x: string]: any; }, curr: { dt: number; }) => {
-        const date = new Date(curr.dt * 1000).toLocaleDateString();
-        if (!acc[date]) {
-          acc[date] = curr;
-        }
-        return acc;
-      }, {});
+      const dailyForecasts = forecastData.list.reduce(
+        (acc: { [x: string]: any }, curr: { dt: number }) => {
+          const date = new Date(curr.dt * 1000).toLocaleDateString();
+          if (!acc[date]) {
+            acc[date] = curr;
+          }
+          return acc;
+        },
+        {}
+      );
       setForecast(Object.values(dailyForecasts).slice(1, 8));
     } catch (err) {
       setError(
@@ -149,7 +151,6 @@ function App() {
           <h1 className="text-4xl md:text-5xl font-bold text-white text-center mb-8">
             Weather Dashboard
           </h1>
-
           <form onSubmit={fetchWeather} className="mb-8">
             <div className="relative max-w-md mx-auto">
               <input
@@ -168,7 +169,15 @@ function App() {
               </button>
             </div>
           </form>
-
+          <h4 className="text-1xl md:text-2xl font-bold text-white text-center mb-8">
+            Made by{" "}
+            <a
+              href="https://www.linkedin.com/in/vinodhkumar102/"
+              target="_blank"
+            >
+              Vinodh Kumar
+            </a>
+          </h4>
           {loading && (
             <div className="text-center text-white">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto"></div>
@@ -250,25 +259,44 @@ function App() {
                     7-Day Forecast
                   </h3>
                   <div className="grid grid-cols-2 md:grid-cols-7 gap-4">
-                    {forecast.map((day: { dt: React.Key | null | undefined; weather: { main: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; }[]; main: { temp: number; }; }) => (
-                      <div
-                        key={day.dt}
-                        className="bg-white/10 rounded-xl p-4 text-center"
-                      >
-                        <p className="text-white font-bold mb-2">
-                          {getDayName(day.dt)}
-                        </p>
-                        <div className="flex justify-center mb-2">
-                          {getWeatherIcon(day.weather[0].main, 8)}
+                    {forecast.map(
+                      (day: {
+                        dt: React.Key | null | undefined;
+                        weather: {
+                          main:
+                            | string
+                            | number
+                            | boolean
+                            | React.ReactElement<
+                                any,
+                                string | React.JSXElementConstructor<any>
+                              >
+                            | Iterable<React.ReactNode>
+                            | React.ReactPortal
+                            | null
+                            | undefined;
+                        }[];
+                        main: { temp: number };
+                      }) => (
+                        <div
+                          key={day.dt}
+                          className="bg-white/10 rounded-xl p-4 text-center"
+                        >
+                          <p className="text-white font-bold mb-2">
+                            {getDayName(day.dt)}
+                          </p>
+                          <div className="flex justify-center mb-2">
+                            {getWeatherIcon(day.weather[0].main, 8)}
+                          </div>
+                          <p className="text-white font-bold">
+                            {Math.round(day.main.temp)}°C
+                          </p>
+                          <p className="text-white/70 text-sm">
+                            {day.weather[0].main}
+                          </p>
                         </div>
-                        <p className="text-white font-bold">
-                          {Math.round(day.main.temp)}°C
-                        </p>
-                        <p className="text-white/70 text-sm">
-                          {day.weather[0].main}
-                        </p>
-                      </div>
-                    ))}
+                      )
+                    )}
                   </div>
                 </div>
               )}
