@@ -1,131 +1,18 @@
-/* General Styles */
-body {
-  font-family: "Montserrat", sans-serif;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-.app {
-  background-size: cover;
-  background-position: center;
-  transition: background-image 0.5s ease-in-out;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-main {
-  background: rgba(124, 133, 37, 0.5);
-  padding: 20px;
-  border-radius: 16px;
-  width: 90%;
-  max-width: 600px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-}
-
-.search-box {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 30px;
-}
-
-.search-bar {
-  width: 70%;
-  padding: 10px;
-  font-size: 18px;
-  border: none;
-  border-radius: 8px 0 0 8px;
-  outline: none;
-}
-
-.search-button {
-  padding: 10px 20px;
-  font-size: 18px;
-  border: none;
-  background-color: #007bff;
-  color: #fff;
-  cursor: pointer;
-  border-radius: 0 8px 8px 0;
-  transition: background-color 0.3s ease;
-}
-
-.search-button:hover {
-  background-color: #0056b3;
-}
-
-.loading,
-.error {
-  text-align: center;
-  color: #020202;
-  margin-top: 20px;
-}
-
-.location-box {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.location-box .location {
-  font-size: 24px;
-  font-weight: 600;
-  color: #121010;
-}
-
-.location-box .date {
-  font-size: 18px;
-  font-weight: 300;
-  color: #000000;
-}
-
-.weather-box {
-  text-align: center;
-}
-
-.weather-box .temp {
-  font-size: 48px;
-  font-weight: 700;
-  color: #000000;
-}
-
-.weather-box .weather {
-  font-size: 24px;
-  font-weight: 500;
-  color: #000000;
-}
-
-.a-link {
-  text-align: center;
-  margin-top: 20px;
-}
-
-.a-link a {
-  color: #9d0000;
-  text-decoration: none;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .search-bar {
-    width: 60%;
-    font-size: 16px;
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
   }
-
-  .search-button {
-    font-size: 16px;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
+}
 
-  .location-box .location {
-    font-size: 20px;
-  }
-
-  .weather-box .temp {
-    font-size: 36px;
-  }
-
-  .weather-box .weather {
-    font-size: 20px;
-  }
+.animate-fadeIn {
+  animation: fadeIn 0.5s ease-out forwards;
 }
